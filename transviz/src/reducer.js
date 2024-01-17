@@ -1,12 +1,12 @@
-import { combineReducers } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 
 // reducer import
-import canvasReducer from './reducers/canvasReducer'
+import canvasReducer from './canvasReducer'
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
-const reducer = combineReducers({
-    canvas: canvasReducer,
-})
-
-export default reducer
+export const store = configureStore({
+    reducer: {
+        canvas: canvasReducer
+    }
+});

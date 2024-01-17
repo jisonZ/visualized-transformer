@@ -15,9 +15,10 @@ import { Toolbar, Box, AppBar, Button, collapseClasses } from '@mui/material'
 // Project import
 import CanvasNode from "./CanvasNode";
 import ButtonEdge from "./ButtonEdge";
+import AddNodes from "./AddNodes";
 
 // Utils
-import { getUniqueNodeId } from "./utils";
+import { getUniqueNodeId, initNode } from "./genericHelper";
 
 const nodeTypes = { customNode: CanvasNode };
 const edgeTypes = { buttonedge: ButtonEdge };
@@ -37,6 +38,19 @@ const Canvas = () => {
   // Redux
   const canvas = useSelector((state) => state.canvas)
   const dispatch = useDispatch();
+
+  // pesudo components
+  const [pesudoComponents, setPesudoComponents] = useState(null);
+  // useEffect(() => {
+  //   fetch("./nodeinfo.json") 
+  //       .then((res) => { 
+  //       return res.json(); 
+  //   }) 
+  //   .then((data) => setPesudoComponents(data));
+
+  //   console.log("startUp Effects")
+  //   console.log(pesudoComponents)
+  // }, [])
 
   const onNodeClick = useCallback((event, clickedNode) => {
     /**
@@ -128,9 +142,9 @@ const Canvas = () => {
 
   const setDirty = () => {
     /**
-     * TODO: Set Dirty for 'Unititled*' saving option
+     * Set Dirty for 'Unititled*' saving option
      */
-    // dispatch({ type: SET_DIRTY })
+    dispatch(setDirty())
   };
 
   const onConnect = (params) => {
@@ -162,7 +176,7 @@ const Canvas = () => {
           if (inputAnchor && inputAnchor.list) {
             const newValues = node.data.inputs[targetInput] || [];
             if (targetInput === "tools") {
-              rearrangeToolsOrdering(newValues, sourceNodeId);
+              // rearrangeToolsOrdering(newValues, sourceNodeId);
             } else {
               newValues.push(`{{${sourceNodeId}.data.instance}}`);
             }
@@ -222,7 +236,7 @@ const Canvas = () => {
                   }}
                 />
                 <Background color="#aaa" gap={16} />
-                <AddNodes nodesData={getNodesApi.data} node={selectedNode} />
+                {/* <AddNodes nodesData={pesudoComponents} node={selectedNode} /> */}
               </ReactFlow>
             </div>
           </div>
